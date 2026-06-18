@@ -123,6 +123,43 @@ export function parseGedcom(content: string): FamilyMember[] {
     }
   }
 
+  for (const family of families.values()) {
+    for (const childId of family.childIds) {
+      if (!memberMap.has(childId)) continue
+      const child = memberMap.get(childId)!
+      if (family.husbandId && memberMap.has(family.husbandId)) {
+        const father = memberMap.get(family.husbandId)!
+        if (!child.parentId) {
+          child.parentId = family.husbandId
+        }
+        if (!father.childrenIds.includes(childId)) {
+          father.childrenIds.push(childId)
+        }
+      }
+      if (family.wifeId && memberMap.has(family.wifeId)) {
+        const mother = memberMap.get(family.wifeId)!
+        if (!child.parentId) {
+          child.parentId = family.wifeId
+        }
+        if (!mother.childrenIds.includes(childId)) {
+          mother.childrenIds.push(childId)
+        }
+      }
+    }
+    if (family.husbandId && family.wifeId) {
+      const husband = memberMap.get(family.husbandId)
+      const wife = memberMap.get(family.wifeId)
+      if (husband && wife) {
+        if (!husband.spouseIds.includes(wife.id)) {
+          husband.spouseIds.push(wife.id)
+        }
+        if (!wife.spouseIds.includes(husband.id)) {
+          wife.spouseIds.push(husband.id)
+        }
+      }
+    }
+  }
+
   const roots = [...memberMap.values()].filter((m) => !m.parentId)
   const visited = new Set<string>()
   for (const root of roots) {
