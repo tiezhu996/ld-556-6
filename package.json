@@ -1,0 +1,31 @@
+{
+  "name": "legacy-tree",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 38406",
+    "build": "vue-tsc -b && vite build",
+    "type-check": "vue-tsc -b",
+    "preview": "vite preview --host 127.0.0.1 --port 38406"
+  },
+  "dependencies": {
+    "d3": "^7.9.0",
+    "idb": "^8.0.3",
+    "naive-ui": "^2.42.0",
+    "pinia": "^2.3.1",
+    "vfonts": "^0.0.3",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.2",
+    "@types/d3": "^7.4.3",
+    "@types/node": "^22.13.10",
+    "@vitejs/plugin-vue": "^6.0.7",
+    "@vue/tsconfig": "^0.7.0",
+    "typescript": "~5.8.3",
+    "vite": "^8.0.16",
+    "vue-tsc": "^2.2.8"
+  }
+}
