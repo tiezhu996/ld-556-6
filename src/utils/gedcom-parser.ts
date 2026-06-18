@@ -103,12 +103,22 @@ export function parseGedcom(content: string): FamilyMember[] {
     if (person.parentFamilyId) {
       const parentFamily = families.get(person.parentFamilyId)
       if (parentFamily) {
-        const parentId = parentFamily.husbandId || parentFamily.wifeId
-        if (parentId && memberMap.has(parentId)) {
-          member.parentId = parentId
-          const parent = memberMap.get(parentId)!
-          if (!parent.childrenIds.includes(member.id)) {
-            parent.childrenIds.push(member.id)
+        if (parentFamily.husbandId && memberMap.has(parentFamily.husbandId)) {
+          const father = memberMap.get(parentFamily.husbandId)!
+          if (!member.parentId) {
+            member.parentId = parentFamily.husbandId
+          }
+          if (!father.childrenIds.includes(member.id)) {
+            father.childrenIds.push(member.id)
+          }
+        }
+        if (parentFamily.wifeId && memberMap.has(parentFamily.wifeId)) {
+          const mother = memberMap.get(parentFamily.wifeId)!
+          if (!member.parentId) {
+            member.parentId = parentFamily.wifeId
+          }
+          if (!mother.childrenIds.includes(member.id)) {
+            mother.childrenIds.push(member.id)
           }
         }
       }
