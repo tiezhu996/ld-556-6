@@ -31,7 +31,7 @@ export const usePhotoStore = defineStore('photos', () => {
   }
 
   function byMember(memberId: string) {
-    return photos.value.filter((photo) => photo.memberId === memberId && photo.people.includes(memberId))
+    return photos.value.filter((photo) => photo.uploaderId === memberId || photo.people.includes(memberId))
   }
 
   return { photos, restoredPhotos, loading, hydrate, persist, savePhoto, byMember }

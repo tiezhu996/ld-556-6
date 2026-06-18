@@ -47,8 +47,8 @@ export const useFamilyStore = defineStore('family', () => {
   function relations(id: string): MemberRelationSummary {
     const current = getById(id)
     return {
-      spouses: current ? current.childrenIds.map(getById).filter(Boolean) as FamilyMember[] : [],
-      children: current ? current.spouseIds.map(getById).filter(Boolean) as FamilyMember[] : [],
+      spouses: current ? current.spouseIds.map(getById).filter(Boolean) as FamilyMember[] : [],
+      children: current ? current.childrenIds.map(getById).filter(Boolean) as FamilyMember[] : [],
       parent: current?.parentId ? getById(current.parentId) : undefined
     }
   }

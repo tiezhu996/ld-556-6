@@ -11,7 +11,7 @@ export async function buildExportPayload(input: Omit<LegacyTreeExport, 'version'
   }
   const [family, stories, legacyPlans] = await Promise.all([
     Promise.all(input.family.map(async (item) => ({ id: item.id, encrypted: await encryptJson(item) }))),
-    Promise.all(input.stories.map(async (item) => ({ id: item.memberId, encrypted: await encryptJson(item) }))),
+    Promise.all(input.stories.map(async (item) => ({ id: item.id, encrypted: await encryptJson(item) }))),
     Promise.all(input.legacyPlans.map(async (item) => ({ id: item.id, encrypted: await encryptJson(item) })))
   ])
   return {
@@ -20,7 +20,7 @@ export async function buildExportPayload(input: Omit<LegacyTreeExport, 'version'
     encrypted: true,
     family: family as unknown as FamilyMember[],
     stories: stories as unknown as Story[],
-    photos: input.photos.map((photo) => ({ ...photo, people: [photo.memberId] })) as unknown as Photo[],
+    photos: input.photos as unknown as Photo[],
     legacyPlans: legacyPlans as unknown as LegacyPlan[]
   }
 }
